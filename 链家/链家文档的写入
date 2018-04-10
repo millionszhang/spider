@@ -1,0 +1,35 @@
+import urllib
+import re
+from bs4 import BeautifulSoup
+
+def get_urllist():
+    #获取连接列表
+    page=int(input(print("请输入页数")))
+    url=input(print("请输入url"))
+    urllist=[]
+    for i in range(1,page):
+        a=url+"d"+str(i)+"l1l2"
+        urllist.append(a)
+    return (urllist)
+
+def get_content(urllist):
+    for url in urllist:
+        data = urllib.request.urlopen(url).read().decode('utf-8')
+        contentpat = '<div class="info-panel">.*?</li>'
+        contentlist = re.compile(contentpat, re.S).findall(str(data))
+        for x in contentlist:
+            info = {}
+            soup = BeautifulSoup(x, 'lxml')
+            info1 = soup.select('.fang-subway-ex')[0].text
+            info3 = soup.select('.price')[0].text
+            info4 = soup.select('.price-pre')[0].text
+            info5 = soup.select('.where')[0].text
+            info6 = soup.find('h2')
+            t3 = re.compile('/.*?.html').findall(str(info6))
+            info7 = soup.find('h2').text
+            print(t3, info1, info3, info4, info7, info5,)
+
+content=get_content(get_urllist())
+
+
+
