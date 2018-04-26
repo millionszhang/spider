@@ -90,5 +90,4 @@ def main():
     url = 'http://music.163.com/discover/artist/cat?id=1001'  # 华语男歌手页面
     singer_url(url)
 
-
 main()
