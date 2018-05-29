@@ -39,17 +39,17 @@ class ZhihuAccount(object):
         self.login_data = FORM_DATA.copy()
         self.session = requests.session()
         self.session.headers = HEADERS.copy()
-        self.session.cookies = cookiejar.LWPCookieJar(filename='./cookies.txt')
+        self.session.cookies = cookiejar.LWPCookieJar(filename='./cookie.txt')
 
-    def login(self, username=None, password=None, load_cookies=True):
+    def login(self, username=None, password=None, load_cookie=True):
         """
         模拟登录知乎
         :param username: 登录手机号
         :param password: 登录密码
-        :param load_cookies: 是否读取上次保存的 Cookies
+        :param load_cookie: 是否读取上次保存的 Cookie
         :return: bool
         """
-        if load_cookies and self.load_cookies():
+        if load_cookie and self.load_cookie():
             if self.check_login():
                 return True
 
@@ -78,7 +78,7 @@ class ZhihuAccount(object):
         print('登录失败')
         return False
 
-    def load_cookies(self):
+    def load_cookie(self):
         """
         读取 Cookies 文件加载到 Session
         :return: bool
@@ -97,7 +97,7 @@ class ZhihuAccount(object):
         """
         resp = self.session.get(self.login_url, allow_redirects=False)
         if resp.status_code == 302:
-            self.session.cookies.save()
+            self.session.cookie.save()
             print('登录成功')
             return True
         return False
